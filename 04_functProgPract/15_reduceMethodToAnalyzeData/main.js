@@ -1,21 +1,19 @@
 console.clear()
 
 const users = [
-  { name: 'John', age: 34, legs: 2 },
-  { name: 'Amy', age: 20, legs: 33 },
-  { name: 'camperCat', age: 10, legs: 5 }
+  { name: 'John', age: 34 },
+  { name: 'Amy', age: 20 },
+  { name: 'camperCat', age: 10 }
 ]
 
-const names = users.map((user) => user.name)
-console.log(names)
+const sumOfAges = users.reduce((sum, user) => sum + user.age, 0)
+console.log(sumOfAges)
 
-const ages = users.map((user) => user.age)
-console.log(ages)
-
-const legss = users.map((user) => {
-  return user.legs
-})
-console.log(legss)
+const usersObj = users.reduce((obj, user) => {
+  obj[user.name] = user.age
+  return obj
+}, {})
+console.log(usersObj)
 
 // The global variable
 const watchList = [
@@ -138,24 +136,18 @@ const watchList = [
   }
 ]
 
-// Change this to map method
+//Filter to find films created by director
+//map to convert ratings to from strings to numbers
+//use reduce to add ratings together
+//divide by the number of films to get avg.
+function getRating(watchList) {
+  const getAvgRating =
+    watchList
+      .filter((film) => film.Director === 'Christopher Nolan')
+      .map((film) => Number(film.imdbRating))
+      .reduce((sumOfRatings, rating) => sumOfRatings + rating) /
+    watchList.filter((film) => film.Director === 'Christopher Nolan').length
+  return getAvgRating
+}
 
-// const ratings = []
-// for (let i = 0; i < watchList.length; i++) {
-//   ratings.push({
-//     title: watchList[i]['Title'],
-//     rating: watchList[i]['imdbRating']
-//   })
-// }
-
-const ratings = watchList.map((item) => ({
-  title: item['Title'],
-  rating: item['imdbRating']
-}))
-
-// const ratings = watchList.map(({ Title: title, imdbRating: rating }) => ({
-//   title,
-//   rating
-// }))
-
-// console.log(JSON.stringify(ratings))
+console.log(getRating(watchList))

@@ -1,21 +1,13 @@
 console.clear()
 
 const users = [
-  { name: 'John', age: 34, legs: 2 },
-  { name: 'Amy', age: 20, legs: 33 },
-  { name: 'camperCat', age: 10, legs: 5 }
+  { name: 'John', age: 34 },
+  { name: 'Amy', age: 20 },
+  { name: 'camperCat', age: 10 }
 ]
 
-const names = users.map((user) => user.name)
-console.log(names)
-
-const ages = users.map((user) => user.age)
-console.log(ages)
-
-const legss = users.map((user) => {
-  return user.legs
-})
-console.log(legss)
+const userUnder30 = users.filter((user) => user.age < 30)
+console.log(`Users under 30`, userUnder30)
 
 // The global variable
 const watchList = [
@@ -138,24 +130,60 @@ const watchList = [
   }
 ]
 
-// Change this to map method
+// // map first to reduce data and then filter()
+const filteredList = watchList
+  .map((movie) => {
+    return {
+      title: movie.Title,
+      rating: movie.imdbRating
+    }
+  })
+  .filter((movie) => {
+    return parseFloat(movie.rating) >= 8.0
+  })
 
-// const ratings = []
-// for (let i = 0; i < watchList.length; i++) {
-//   ratings.push({
-//     title: watchList[i]['Title'],
-//     rating: watchList[i]['imdbRating']
+// // Same as above but with block
+// const filteredList = watchList
+//   .map(function (e) {
+//     return { title: e['Title'], rating: e['imdbRating'] }
 //   })
-// }
+//   .filter((e) => e.rating >= 8)
 
-const ratings = watchList.map((item) => ({
-  title: item['Title'],
-  rating: item['imdbRating']
-}))
+////ShortHand
+// const filteredList = watchList
+//   .map(({ Title: title, imdbRating: rating }) => ({ title, rating }))
+//   .filter(({ rating }) => rating > 8)
 
-// const ratings = watchList.map(({ Title: title, imdbRating: rating }) => ({
-//   title,
-//   rating
-// }))
+// var filteredList = watchList
+//   .map(({ Title: title, imdbRating: rating }) => ({ title, rating }))
+//   .filter(({ rating }) => rating > 8)
 
-// console.log(JSON.stringify(ratings))
+// console.log(filteredList)
+
+const pgList = watchList
+  .map((movie) => {
+    return {
+      title: movie.Title,
+      rated: movie.Rated
+    }
+  })
+  .filter((movie) => {
+    return movie.rated === 'PG-13'
+  })
+
+// console.log(pgList)
+
+const release09 = watchList
+  .map((movie) => {
+    return {
+      title: movie.Title,
+      year: movie.Year,
+      language: movie.Language,
+      awards: movie.Awards
+    }
+  })
+  .filter((movie) => {
+    return movie.year == 2009
+  })
+
+console.log(release09)
